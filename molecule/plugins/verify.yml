@@ -1,0 +1,83 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: localhost
+  gather_facts: true
+
+  vars:
+    install_dir: "{{ lookup('env', 'HOME') }}/.local/share/rtx/installs"
+
+  tasks:
+    - name: Java
+      block:
+        - name: Populate java version
+          ansible.builtin.command: "{{ install_dir }}/java/20/bin/java --version"
+          register: java_version
+          changed_when: false
+
+        - name: Print java version
+          ansible.builtin.debug:
+            var: java_version.stdout
+
+        - name: Assert java version
+          ansible.builtin.assert:
+            that: "'openjdk 20' in java_version.stdout"
+
+    - name: NodeJS
+      block:
+        - name: Populate node version
+          ansible.builtin.command: "{{ install_dir }}/node/20.4.0/bin/node  --version"
+          register: node_version
+          changed_when: false
+
+        - name: Print node version
+          ansible.builtin.debug:
+            var: node_version.stdout
+
+        - name: Assert node version
+          ansible.builtin.assert:
+            that: "'20.4.0' in node_version.stdout"
+
+    - name: Rust
+      block:
+        - name: Populate rustc version
+          ansible.builtin.command: "{{ install_dir }}/rust/1.71.0/bin/rustc  --version"
+          register: rustc_version
+          changed_when: false
+
+        - name: Print rustc version
+          ansible.builtin.debug:
+            var: rustc_version.stdout
+
+        - name: Assert rustc version
+          ansible.builtin.assert:
+            that: "'1.70.0' in rustc_version.stdout"
+    - name: Python
+      block:
+        - name: Populate nodejs version
+          ansible.builtin.command: "{{ install_dir }}/python/3.11.4/bin/python --version"
+          register: nodejs_version
+          changed_when: false
+
+        - name: Print nodejs version
+          ansible.builtin.debug:
+            var: nodejs_version.stdout
+
+        - name: Assert nodejs version
+          ansible.builtin.assert:
+            that: "'3.11.4' in nodejs_version.stdout"
+    - name: Go
+      block:
+        - name: Populate go version
+          ansible.builtin.command: "{{ install_dir }}/go/1.20.6/go/bin/go version"
+          register: go_version
+          changed_when: false
+
+        - name: Print go version
+          ansible.builtin.debug:
+            var: go_version.stdout
+
+        - name: Assert go version
+          ansible.builtin.assert:
+            that: "'1.20.6' in go_version.stdout"

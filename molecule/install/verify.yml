@@ -1,0 +1,61 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: localhost
+  gather_facts: true
+
+  vars:
+    rtx_dir: "{{ ansible_user_id }}/.local/share/rtx"
+
+  tasks:
+    - name: "Retrieve information from path"
+      ansible.builtin.stat:
+        path: "{{ rtx_dir }}"
+      register: directory
+
+    - name: "Assert that directory is created correctly"
+      ansible.builtin.assert:
+        that:
+          - "directory.stat.exists"
+          - "directory.stat.isdir"
+          - "directory.stat.mode == '0700'"
+          - "directory.stat.pw_name == '{{ ansible_user_id }}'"
+          - "directory.stat.gid == {{ ansible_user_gid }}"
+
+    - name: Populate rtx version
+      ansible.builtin.command: rtx version
+      register: rtx_version
+      changed_when: rtx_version.rc != 0
+
+    - name: Print rtx version
+      ansible.builtin.debug:
+        var: rtx_version.stdout
+
+    - name: Assert rtx version
+      ansible.builtin.assert:
+        that: "'1.34.1' in rtx_version.stdout"
+
+    - name: Check if rtx is activated in .bashrc
+      ansible.builtin.command: grep 'rtx activate bash' {{ lookup('env', 'HOME') }}/.bashrc
+      register: bashrc_output
+      changed_when: bashrc_output.rc != 0
+    - name: Verify string in .bashrc
+      ansible.builtin.assert:
+        that: bashrc_output.rc == 0
+
+    - name: Check if rtx is activated in .zshrc
+      ansible.builtin.command: grep 'rtx activate zsh' {{ lookup('env', 'HOME') }}/.zshrc
+      register: zshrc_output
+      changed_when: zshrc_output.rc != 0
+    - name: Verify string in .zshrc
+      ansible.builtin.assert:
+        that: zshrc_output.rc == 0
+
+    - name: Check if rtx is activated in fish
+      ansible.builtin.command: grep 'rtx activate fish' {{ lookup('env', 'HOME') }}/.config/fish/config.fish
+      register: fish_output
+      changed_when: fish_output.rc != 0
+    - name: Verify string in fish
+      ansible.builtin.assert:
+        that: fish_output.rc == 0

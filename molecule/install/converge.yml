@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: "Include hesthub.ansible-rtx"
+      ansible.builtin.include_role:
+        name: "hesthub.ansible-rtx"
+      vars:
+        shells_to_activate:
+          - zsh
+          - bash
+          - fish

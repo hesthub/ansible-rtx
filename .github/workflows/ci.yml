@@ -1,0 +1,67 @@
+---
+name: CI
+"on":
+  pull_request:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: "hesthub.ansible-rtx"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: macos-12
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v3
+        with:
+          path: "hesthub.ansible-rtx"
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install test dependencies.
+        run: pip3 install yamllint
+
+      - name: Lint code.
+        run: |
+          yamllint .
+
+  molecule:
+    name: Molecule
+    strategy:
+      max-parallel: 4
+      fail-fast: false
+      matrix:
+        os:
+          - macos-12
+          - macos-13
+        scenario:
+          - install
+          - plugins
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: "hesthub.ansible-rtx"
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+          cache: "pip"
+      - run: pip install -r molecule/requirements.txt
+
+      - name: Install ZSH
+        run: |
+          brew update
+          brew install zsh
+
+      - name: Run Molecule tests.
+        run: molecule -v test --scenario-name ${{matrix.scenario}}
+        env:
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"

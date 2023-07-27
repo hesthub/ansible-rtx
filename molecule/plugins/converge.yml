@@ -1,0 +1,41 @@
+---
+- name: Converge
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: "Include hesthub.ansible-rtx"
+      ansible.builtin.include_role:
+        name: "hesthub.ansible-rtx"
+      vars:
+        shells_to_activate: []
+        rtx_plugins:
+          - name: nodejs
+            repository: "https://github.com/asdf-vm/asdf-nodejs.git"
+            versions:
+              - 20.4.0
+            delete_versions: []
+            global: 20.4.0
+          - name: java
+            repository: ""
+            versions:
+              - 20
+            delete_versions: []
+            global: 20
+          - name: rust
+            repository: ""
+            versions:
+              - 1.71.0
+            delete_versions: []
+            global: 1.71.0
+          - name: python
+            repository: "https://github.com/asdf-community/asdf-python.git"
+            versions:
+              - 3.11.4
+            delete_versions: []
+            global: 3.11.4
+          - name: golang
+            repository: ""
+            versions:
+              - 1.20.6
+            delete_versions: []
+            global: 1.20.6
