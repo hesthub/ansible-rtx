@@ -15,7 +15,7 @@ ansible-galaxy role install hesthub.rtx
 Install from github
 
 ```
-ansible-galaxy role install git+https://github.com/hest-hub/ansible-rtx
+ansible-galaxy role install git+https://github.com/hesthub/ansible-rtx
 ```
 
 the **RECOMMEND** way is to lock dependency version in your [requirements.yml](https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#installing-roles-and-collections-from-the-same-requirements-yml-file):
