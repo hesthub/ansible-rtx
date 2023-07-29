@@ -1,0 +1,9 @@
+---
+- name: "[Kotlin]: install dependecies via brew"
+  community.general.homebrew:
+    name:
+      - curl
+      - unzip
+    state: present
+  register: deps_installed
+  until: deps_installed is succeeded

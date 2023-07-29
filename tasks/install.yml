@@ -5,7 +5,8 @@
     name: rtx
     state: present
 
-- name: zsh
+- name: Zsh
+  when: "'zsh' in shells_to_activate"
   block:
     - name: Update zshrc
       ansible.builtin.lineinfile:
@@ -20,9 +21,9 @@
       args:
         executable: /usr/local/bin/zsh
       changed_when: false
-  when: "'zsh' in shells_to_activate"
 
-- name: bash
+- name: Bash
+  when: "'bash' in shells_to_activate"
   block:
     - name: Update bashrc
       ansible.builtin.lineinfile:
@@ -37,9 +38,9 @@
       args:
         executable: /bin/bash
       changed_when: false
-  when: "'bash' in shells_to_activate"
 
-- name: fish
+- name: Fish
+  when: "'fish' in shells_to_activate"
   block:
     - name: Update fish config
       ansible.builtin.lineinfile:
@@ -48,5 +49,3 @@
         mode: "0644"
         line: "rtx activate fish"
         regexp: "^rtx activate fish"
-
-  when: "'fish' in shells_to_activate"
