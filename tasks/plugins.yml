@@ -14,8 +14,11 @@
     - dart
     - golang
     - groovy
+    - haskell
     - java
+    - julia
     - kotlin
+    - lua
     - nodejs
     - python
     - rust
