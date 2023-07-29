@@ -13,6 +13,8 @@
   loop:
     - clojure
     - dart
+    - elixir
+    - erlang
     - golang
     - groovy
     - haskell

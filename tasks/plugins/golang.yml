@@ -1,5 +1,5 @@
 ---
-- name: "[golang]: install dependecies via brew"
+- name: "[Golang]: install dependecies via brew"
   community.general.homebrew:
     name:
       - coreutils

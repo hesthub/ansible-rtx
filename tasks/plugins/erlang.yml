@@ -1,11 +1,8 @@
 ---
-- name: "[Java]: install dependecies via brew"
+- name: "[Erlang]: install dependecies via brew"
   community.general.homebrew:
     name:
-      - bash
-      - curl
-      - unzip
-      - jq
+      - autoconf
     state: present
   register: deps_installed
   until: deps_installed is succeeded

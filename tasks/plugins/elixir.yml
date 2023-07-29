@@ -1,11 +1,8 @@
 ---
-- name: "[Java]: install dependecies via brew"
+- name: "[Elixir]: install dependecies via brew"
   community.general.homebrew:
     name:
-      - bash
-      - curl
       - unzip
-      - jq
     state: present
   register: deps_installed
   until: deps_installed is succeeded
