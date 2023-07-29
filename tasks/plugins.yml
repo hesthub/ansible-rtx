@@ -11,6 +11,7 @@
 - name: Specific tasks for {{ item }}
   ansible.builtin.include_tasks: plugins/{{ item }}.yml
   loop:
+    - clojure
     - dart
     - golang
     - groovy
@@ -20,9 +21,12 @@
     - kotlin
     - lua
     - nodejs
+    - perl
     - python
+    - ruby
     - rust
     - scala
+    - zig
   when: item in plugins_to_install
 
 - name: Install apps

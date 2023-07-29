@@ -1,0 +1,10 @@
+---
+- name: "[Clojure]: install dependecies via brew"
+  community.general.homebrew:
+    name:
+      - curl
+      - git
+      - rlwrap
+    state: present
+  register: deps_installed
+  until: deps_installed is succeeded
