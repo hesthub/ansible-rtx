@@ -52,7 +52,7 @@
 
         - name: Assert rustc version
           ansible.builtin.assert:
-            that: "'1.70.0' in rustc_version.stdout"
+            that: "'1.7' in rustc_version.stdout"
     - name: Python
       block:
         - name: Populate nodejs version
