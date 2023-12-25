@@ -34,7 +34,7 @@
 
     - name: Assert rtx version
       ansible.builtin.assert:
-        that: "'2023.8' in rtx_version.stdout"
+        that: "'2023.12.18' in rtx_version.stdout"
 
     - name: Check if rtx is activated in .bashrc
       ansible.builtin.command: grep 'rtx activate bash' {{ lookup('env', 'HOME') }}/.bashrc
