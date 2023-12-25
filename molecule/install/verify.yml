@@ -20,8 +20,7 @@
           - "directory.stat.exists"
           - "directory.stat.isdir"
           - "directory.stat.mode == '0700'"
-          - "directory.stat.pw_name == '{{ ansible_user_id }}'"
-          - "directory.stat.gid == {{ ansible_user_gid }}"
+          - "directory.stat.pw_name == 'runner'"
 
     - name: Populate rtx version
       ansible.builtin.command: rtx version
